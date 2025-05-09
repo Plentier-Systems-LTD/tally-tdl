@@ -1,337 +1,336 @@
 {
-  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-  "name": "TDL",
-  "scopeName": "source.tdl",
-  "fileTypes": [".tdl"],
-  "patterns": [
-    { "include": "#comments" },
-    { "include": "#directives" },
-    { "include": "#definitions" },
-    { "include": "#http-integration" },
-    { "include": "#control-flow" },
-    { "include": "#storage-declarations" },
-    { "include": "#keywords" },
-    { "include": "#operators" },
-    { "include": "#variables" },
-    { "include": "#strings" },
-    { "include": "#numbers" },
-    { "include": "#functions" },
-    { "include": "#system-definitions" },
-    { "include": "#menu-definitions" }
-  ],
-  "repository": {
-    "comments": {
-      "patterns": [
-        {
-          "name": "comment.line.semicolon.tdl",
-          "match": ";.*$"
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "TDL",
+    "scopeName": "source.tdl",
+    "fileTypes": [".tdl"],
+    "patterns": [
+        { "include": "#comments" },
+        { "include": "#directives" },
+        { "include": "#definitions" },
+        { "include": "#http-integration" },
+        { "include": "#control-flow" },
+        { "include": "#storage-declarations" },
+        { "include": "#keywords" },
+        { "include": "#operators" },
+        { "include": "#variables" },
+        { "include": "#strings" },
+        { "include": "#numbers" },
+        { "include": "#functions" },
+        { "include": "#system-definitions" },
+        { "include": "#menu-definitions" }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.line.semicolon.tdl",
+                    "match": ";.*$"
+                },
+                {
+                    "name": "comment.block.tdl",
+                    "begin": "/\\*",
+                    "end": "\\*/"
+                }
+            ]
         },
-        {
-          "name": "comment.block.tdl",
-          "begin": "/\\*",
-          "end": "\\*/"
+        "directives": {
+            "patterns": [
+                {
+                    "name": "meta.directive.tdl",
+                    "match": "(?i)^\\s*#(include|insert|replace)\\b"
+                }
+            ]
+        },
+        "http-integration": {
+            "patterns": [
+                {
+                    "name": "meta.http.tdl",
+                    "match": "(?i)\\b(Export\\s+Header|Data\\s+Source|RemoteRequest|JSON\\s+Object|Client\\s+Only)\\b"
+                },
+                {
+                    "name": "string.unquoted.url.tdl",
+                    "match": "(?i)(http|https):\\/\\/[^\\s]+"
+                }
+            ]
+        },
+        "control-flow": {
+            "patterns": [
+                {
+                    "name": "keyword.control.tdl",
+                    "match": "(?i)\\b(If|Then|Else|End\\s+If|Do\\s+If|While|End\\s+While|For|EndFor|Break|Continue|Return|Walk|End\\s+Walk|Call|Set|Increment|Query\\s+Box|Msg\\s+Box|START\\s+PROGRESS|END\\s+PROGRESS|SHOW\\s+PROGRESS|Open\\s+File|Write\\s+File\\s+Line|Close\\s+File|Truncate\\s+File)\\b"
+                },
+                {
+                    "name": "meta.line-number.tdl",
+                    "match": "^\\s*\\d+:"
+                }
+            ]
+        },
+        "storage-declarations": {
+            "patterns": [
+                {
+                    "name": "meta.storage.declaration.tdl",
+                    "match": "(?i)\\bStorage\\s*:\\s*([A-Za-z0-9_]+)\\s*:\\s*(String|Number|Logical|Date|Boolean|Time|DateTime|Amount|Quantity|Rate|Percentage)\\b",
+                    "captures": {
+                        "1": { "name": "variable.other.storage-field.tdl" },
+                        "2": { "name": "keyword.type.tdl" }
+                    }
+                },
+                {
+                    "name": "meta.storage.modifier.tdl",
+                    "match": "(?i)\\bStorage\\s*:\\s*([A-Za-z0-9_]+)\\s*:\\s*(Update|Set|Clear|Reset)\\b",
+                    "captures": {
+                        "1": { "name": "variable.other.storage-field.tdl" },
+                        "2": { "name": "keyword.control.storage-action.tdl" }
+                    }
+                }
+            ]
+        },
+        "definitions": {
+            "patterns": [
+                {
+                    "name": "meta.definition.tdl",
+                    "match": "(?i)\\[(?:!?#?)([A-Za-z0-9\\s:]+)\\]"
+                },
+                {
+                    "name": "meta.section.tdl",
+                    "match": "(?i)^\\s*\\[#[A-Za-z0-9\\s:]+\\]"
+                }
+            ]
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "keyword.attribute.tdl",
+                    "match": "(?i)\\b(Title|Use|Set\\s+as|Storage|Width|Info|Show|Invisible|Validate|Set\\s+Always|Space\\s+Left|Local|Add|Option|Include|Source\\s+Collection|Format|Fetch|Default|Mandatory|Unique|Key|System|User|Private|Public|Static|Dynamic|Volatile|Constant|ReadOnly|WriteOnly|ReadWrite|Align|Style|Repeat|Delete|Border|Inactive|Sub\\s+Form|Filter|Export\\s+Header|Data\\s+Source|RemoteRequest|JSON\\s+Object|Client\\s+Only|Object|Collection|Form|Report|Part|Line|Field|Menu|Variable|Parameter)\\b"
+                },
+                {
+                    "name": "keyword.type.tdl",
+                    "match": "(?i)\\b(Integer|String|Number|Boolean|Date|Time|DateTime|Amount|Quantity|Rate|Percentage|Voucher|Report|Form|Field|Collection|Part|Line|Logical)\\b"
+                },
+                {
+                    "name": "keyword.voucher.tdl",
+                    "match": "(?i)\\b(Invoice|DeliveryNote|Payment|Receipt|Journal|Contra|CreditNote|DebitNote|Purchase|Sales)\\b"
+                }
+            ]
+        },
+        "operators": {
+            "patterns": [
+                {
+                    "name": "keyword.operator.logical.tdl",
+                    "match": "(?i)\\b(AND|OR|NOT|XOR)\\b"
+                },
+                {
+                    "name": "keyword.operator.comparison.tdl",
+                    "match": "\\b(==|!=|<=|>=|<|>|<>|=)\\b"
+                },
+                {
+                    "name": "keyword.operator.arithmetic.tdl",
+                    "match": "\\b(\\+|-|\\*|/|%|\\^)\\b"
+                },
+                {
+                    "name": "keyword.operator.assignment.tdl",
+                    "match": ":="
+                },
+                {
+                    "name": "keyword.operator.concatenation.tdl",
+                    "match": "\\+"
+                }
+            ]
+        },
+        "variables": {
+            "patterns": [
+                {
+                    "name": "variable.language.system.tdl",
+                    "match": "@@[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
+                },
+                {
+                    "name": "variable.parameter.tdl",
+                    "match": "##[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
+                },
+                {
+                    "name": "variable.local.tdl",
+                    "match": "\\$\\$[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
+                },
+                {
+                    "name": "variable.field.tdl",
+                    "match": "\\$[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
+                },
+                {
+                    "name": "variable.system.tdl",
+                    "match": "@[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
+                },
+                {
+                    "name": "variable.declaration.tdl",
+                    "match": "(?i)\\bVariable\\s*:\\s*[A-Za-z0-9_]+\\s*:\\s*(String|Number|Logical|Date)\\b"
+                }
+            ]
+        },
+        "strings": {
+            "patterns": [
+                {
+                    "name": "string.quoted.double.tdl",
+                    "begin": "\"",
+                    "end": "\"",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.tdl",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.single.tdl",
+                    "begin": "'",
+                    "end": "'",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.tdl",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
+                    "name": "string.unquoted.tdl",
+                    "match": "(?i)\\b(Yes|No|True|False)\\b"
+                }
+            ]
+        },
+        "numbers": {
+            "patterns": [
+                {
+                    "name": "constant.numeric.integer.tdl",
+                    "match": "\\b\\d+\\b"
+                },
+                {
+                    "name": "constant.numeric.float.tdl",
+                    "match": "\\b\\d+\\.\\d+\\b"
+                }
+            ]
+        },
+        "functions": {
+            "patterns": [
+                {
+                    "name": "meta.function.declaration.tdl",
+                    "begin": "(?i)\\[Function:\\s*([A-Za-z0-9\\s]+)\\]",
+                    "end": "(?=\\[|$)",
+                    "beginCaptures": {
+                        "1": { "name": "entity.name.function.tdl" }
+                    },
+                    "patterns": [
+                        { "include": "#function-parameters" },
+                        { "include": "#function-variables" },
+                        { "include": "#function-body" },
+                        { "include": "#control-flow" },
+                        { "include": "#comments" }
+                    ]
+                },
+                {
+                    "name": "support.function.builtin.tdl",
+                    "match": "(?i)\\b(StringLength|Alpha|IsEmpty|StringPart|LastResult|GetFileFullPath|CompanyNumber)\\b"
+                },
+                {
+                    "name": "support.function.control.tdl",
+                    "match": "(?i)\\b(RETURN|RETURNS|CALL|SET|DO\\s+IF|IF|WHILE|ENDWHILE|ENDIF|INCREMENT|QUERY\\s+BOX|MSG\\s+BOX|START\\s+PROGRESS|END\\s+PROGRESS|SHOW\\s+PROGRESS|OPEN\\s+FILE|WRITE\\s+FILE\\s+LINE|CLOSE\\s+FILE|TRUNCATE\\s+FILE|WALK\\s+COLLECTION|END\\s+WALK)\\b"
+                },
+                {
+                    "name": "support.function.string.tdl",
+                    "match": "(?i)\\b(String|Upper|Lower|Trim|Concat|SubString|Replace|Format|Parse|ToString|ToNumber)\\b"
+                },
+                {
+                    "name": "support.function.collection.tdl",
+                    "match": "(?i)\\b(Collection|End\\s+Collection|Walk|End\\s+Walk)\\b"
+                },
+                {
+                    "name": "support.function.file.tdl",
+                    "match": "(?i)\\b(Open\\s+File|Write\\s+File\\s+Line|Close\\s+File|Truncate\\s+File|GetFileFullPath)\\b"
+                }
+            ]
+        },
+        "function-parameters": {
+            "patterns": [
+                {
+                    "name": "meta.function.parameter.tdl",
+                    "match": "(?i)\\bParameter\\s*:\\s*([A-Za-z0-9_]+)\\s*:\\s*(String|Number|Logical|Date)\\b",
+                    "captures": {
+                        "1": { "name": "variable.parameter.tdl" },
+                        "2": { "name": "keyword.type.tdl" }
+                    }
+                }
+            ]
+        },
+        "function-variables": {
+            "patterns": [
+                {
+                    "name": "meta.function.variable.tdl",
+                    "match": "(?i)\\bVariable\\s*:\\s*([A-Za-z0-9_]+)\\s*:\\s*(String|Number|Logical|Date)\\b",
+                    "captures": {
+                        "1": { "name": "variable.other.tdl" },
+                        "2": { "name": "keyword.type.tdl" }
+                    }
+                },
+                {
+                    "name": "meta.function.local.tdl",
+                    "match": "(?i)\\bLocal\\s+Formula\\s*:\\s*([A-Za-z0-9_]+)\\s*:",
+                    "captures": {
+                        "1": { "name": "variable.other.tdl" }
+                    }
+                }
+            ]
+        },
+        "function-body": {
+            "patterns": [
+                {
+                    "name": "meta.function.line-number.tdl",
+                    "match": "^\\s*\\d+:"
+                },
+                {
+                    "name": "meta.function.return.tdl",
+                    "match": "(?i)\\bRETURN\\s*:\\s*([^\\n]+)",
+                    "captures": {
+                        "1": { "patterns": [{ "include": "$self" }] }
+                    }
+                },
+                {
+                    "name": "meta.function.call.tdl",
+                    "match": "(?i)\\bCALL\\s*:\\s*([A-Za-z0-9_]+)",
+                    "captures": {
+                        "1": { "name": "entity.name.function.tdl" }
+                    }
+                }
+            ]
+        },
+        "system-definitions": {
+            "patterns": [
+                {
+                    "name": "meta.system.tdl",
+                    "begin": "(?i)\\[System:\\s*(UDF|Formula|Variable)\\s*\\]",
+                    "end": "(?=\\[)",
+                    "patterns": [
+                        { "include": "#variables" },
+                        { "include": "#keywords" },
+                        { "include": "#strings" }
+                    ]
+                }
+            ]
+        },
+        "menu-definitions": {
+            "patterns": [
+                {
+                    "name": "meta.menu.tdl",
+                    "begin": "(?i)\\[Menu:\\s*([A-Za-z0-9\\s]+)\\]",
+                    "end": "(?=\\[)",
+                    "patterns": [
+                        {
+                            "name": "keyword.menu-item.tdl",
+                            "match": "(?i)\\b(Item|Key\\s+Item|Add|Title|Blank|Indent)\\b"
+                        },
+                        {
+                            "name": "entity.name.menu.tdl",
+                            "match": "(?i)\\b(Display|Alter|Menu):\\s*[A-Za-z0-9\\s]+\\b"
+                        }
+                    ]
+                }
+            ]
         }
-      ]
-    },
-    "directives": {
-      "patterns": [
-        {
-          "name": "meta.directive.tdl",
-          "match": "^\\s*#(include|insert|replace)\\b"
-        }
-      ]
-    },
-    "http-integration": {
-      "patterns": [
-        {
-          "name": "meta.http.tdl",
-          "match": "\\b(Export Header|Data Source|RemoteRequest|JSON Object|Client Only)\\b"
-        },
-        {
-          "name": "string.unquoted.url.tdl",
-          "match": "(http|https):\\/\\/[^\\s]+"
-        }
-      ]
-    },
-    "control-flow": {
-      "patterns": [
-        {
-          "name": "keyword.control.tdl",
-          "match": "\\b(If|Then|Else|End If|Do If|While|End While|For|EndFor|Break|Continue|Return|Walk|End Walk|Call|Set|Increment|Query Box|Msg Box|START PROGRESS|END PROGRESS|SHOW PROGRESS|Open File|Write File Line|Close File|Truncate File)\\b"
-        },
-        {
-          "name": "meta.line-number.tdl",
-          "match": "^\\s*\\d+:"
-        }
-      ]
-    },
-    "storage-declarations": {
-      "patterns": [
-        {
-          "name": "meta.storage.declaration.tdl",
-          "match": "\\bStorage\\s*:\\s*([A-Za-z0-9_]+)\\s*:\\s*(String|Number|Logical|Date|Boolean|Time|DateTime|Amount|Quantity|Rate|Percentage)\\b",
-          "captures": {
-            "1": { "name": "variable.other.storage-field.tdl" },
-            "2": { "name": "keyword.type.tdl" }
-          }
-        },
-        {
-          "name": "meta.storage.modifier.tdl",
-          "match": "\\bStorage\\s*:\\s*([A-Za-z0-9_]+)\\s*:\\s*(Update|Set|Clear|Reset)\\b",
-          "captures": {
-            "1": { "name": "variable.other.storage-field.tdl" },
-            "2": { "name": "keyword.control.storage-action.tdl" }
-          }
-        }
-      ]
-    },
-    "definitions": {
-      "patterns": [
-        {
-          "name": "meta.definition.tdl",
-          "match": "\\[(?:!?#?)([A-Za-z0-9\\s:]+)\\]"
-        },
-        {
-          "name": "meta.section.tdl",
-          "match": "^\\s*\\[#[A-Za-z0-9\\s:]+\\]"
-        }
-      ]
-    },
-    "keywords": {
-      "patterns": [
-        {
-          "name": "keyword.attribute.tdl",
-          "match": "\\b(Title|Use|Set as|Storage|Width|Info|Show|Invisible|Validate|Set Always|Space Left|Local|Add|Option|Include|Source Collection|Format|Fetch|Default|Mandatory|Unique|Key|System|User|Private|Public|Static|Dynamic|Volatile|Constant|ReadOnly|WriteOnly|ReadWrite|Align|Style|Repeat|Delete|Border|Inactive|Sub Form|Filter|Export Header|Data Source|RemoteRequest|JSON Object|Client Only|Object|Collection|Form|Report|Part|Line|Field|Menu|Variable|Parameter)\\b"
-        },
-        {
-          "name": "keyword.type.tdl",
-          "match": "\\b(Integer|String|Number|Boolean|Date|Time|DateTime|Amount|Quantity|Rate|Percentage|Voucher|Report|Form|Field|Collection|Part|Line|Logical)\\b"
-        },
-        {
-          "name": "keyword.voucher.tdl",
-          "match": "\\b(Invoice|DeliveryNote|Payment|Receipt|Journal|Contra|CreditNote|DebitNote|Purchase|Sales)\\b"
-        }
-      ]
-    },
-    "operators": {
-      "patterns": [
-        {
-          "name": "keyword.operator.logical.tdl",
-          "match": "\\b(AND|OR|NOT|XOR)\\b"
-        },
-        {
-          "name": "keyword.operator.comparison.tdl",
-          "match": "\\b(==|!=|<=|>=|<|>|<>|=)\\b"
-        },
-        {
-          "name": "keyword.operator.arithmetic.tdl",
-          "match": "\\b(\\+|-|\\*|/|%|\\^)\\b"
-        },
-        {
-          "name": "keyword.operator.assignment.tdl",
-          "match": ":="
-        },
-        {
-          "name": "keyword.operator.concatenation.tdl",
-          "match": "\\+"
-        }
-      ]
-    },
-    "variables": {
-      "patterns": [
-        {
-          "name": "variable.language.system.tdl",
-          "match": "@@[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
-        },
-        {
-          "name": "variable.parameter.tdl",
-          "match": "##[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
-        },
-        {
-          "name": "variable.local.tdl",
-          "match": "\\$\\$[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
-        },
-        {
-          "name": "variable.field.tdl",
-          "match": "\\$[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
-        },
-        {
-          "name": "variable.system.tdl",
-          "match": "@[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
-        },
-        {
-          "name": "variable.declaration.tdl",
-          "match": "\\bVariable\\s*:\\s*[A-Za-z0-9_]+\\s*:\\s*(String|Number|Logical|Date)\\b"
-        }
-      ]
-    },
-    "strings": {
-      "patterns": [
-        {
-          "name": "string.quoted.double.tdl",
-          "begin": "\"",
-          "end": "\"",
-          "patterns": [
-            {
-              "name": "constant.character.escape.tdl",
-              "match": "\\\\."
-            }
-          ]
-        },
-        {
-          "name": "string.quoted.single.tdl",
-          "begin": "'",
-          "end": "'",
-          "patterns": [
-            {
-              "name": "constant.character.escape.tdl",
-              "match": "\\\\."
-            }
-          ]
-        },
-        {
-          "name": "string.unquoted.tdl",
-          "match": "\\b(Yes|No|True|False)\\b"
-        }
-      ]
-    },
-    "numbers": {
-      "patterns": [
-        {
-          "name": "constant.numeric.integer.tdl",
-          "match": "\\b\\d+\\b"
-        },
-        {
-          "name": "constant.numeric.float.tdl",
-          "match": "\\b\\d+\\.\\d+\\b"
-        }
-      ]
-    },
-    "functions": {
-      "patterns": [
-        {
-          "name": "meta.function.declaration.tdl",
-          "begin": "\\[Function:\\s*([A-Za-z0-9\\s]+)\\]",
-          "end": "(?=\\[|$)",
-          "beginCaptures": {
-            "1": { "name": "entity.name.function.tdl" }
-          },
-          "patterns": [
-            { "include": "#function-parameters" },
-            { "include": "#function-variables" },
-            { "include": "#function-body" },
-            { "include": "#control-flow" },
-            { "include": "#comments" }
-          ]
-        },
-        {
-          "name": "support.function.builtin.tdl",
-          "match": "\\b(StringLength|Alpha|IsEmpty|StringPart|LastResult|GetFileFullPath|CompanyNumber)\\b"
-        },
-        {
-          "name": "support.function.control.tdl",
-          "match": "\\b(RETURN|RETURNS|CALL|SET|DO IF|IF|WHILE|ENDWHILE|ENDIF|INCREMENT|QUERY BOX|MSG BOX|START PROGRESS|END PROGRESS|SHOW PROGRESS|OPEN FILE|WRITE FILE LINE|CLOSE FILE|TRUNCATE FILE|WALK COLLECTION|END WALK)\\b"
-        },
-        {
-          "name": "support.function.string.tdl",
-          "match": "\\b(String|Upper|Lower|Trim|Concat|SubString|Replace|Format|Parse|ToString|ToNumber)\\b"
-        },
-        {
-          "name": "support.function.collection.tdl",
-          "match": "\\b(Collection|End Collection|Walk|End Walk)\\b"
-        },
-        {
-          "name": "support.function.file.tdl",
-          "match": "\\b(Open File|Write File Line|Close File|Truncate File|GetFileFullPath)\\b"
-        }
-      ]
-    },
-    "function-parameters": {
-      "patterns": [
-        {
-          "name": "meta.function.parameter.tdl",
-          "match": "\\bParameter\\s*:\\s*([A-Za-z0-9_]+)\\s*:\\s*(String|Number|Logical|Date)\\b",
-          "captures": {
-            "1": { "name": "variable.parameter.tdl" },
-            "2": { "name": "keyword.type.tdl" }
-          }
-        }
-      ]
-    },
-    "function-variables": {
-      "patterns": [
-        {
-          "name": "meta.function.variable.tdl",
-          "match": "\\bVariable\\s*:\\s*([A-Za-z0-9_]+)\\s*:\\s*(String|Number|Logical|Date)\\b",
-          "captures": {
-            "1": { "name": "variable.other.tdl" },
-            "2": { "name": "keyword.type.tdl" }
-          }
-        },
-        {
-          "name": "meta.function.local.tdl",
-          "match": "\\bLocal Formula\\s*:\\s*([A-Za-z0-9_]+)\\s*:",
-          "captures": {
-            "1": { "name": "variable.other.tdl" }
-          }
-        }
-      ]
-    },
-    "function-body": {
-      "patterns": [
-        {
-          "name": "meta.function.line-number.tdl",
-          "match": "^\\s*\\d+:"
-        },
-        {
-          "name": "meta.function.return.tdl",
-          "match": "\\bRETURN\\s*:\\s*([^\\n]+)",
-          "captures": {
-            "1": { "patterns": [{ "include": "$self" }] }
-          }
-        },
-        {
-          "name": "meta.function.call.tdl",
-          "match": "\\bCALL\\s*:\\s*([A-Za-z0-9_]+)",
-          "captures": {
-            "1": { "name": "entity.name.function.tdl" }
-          }
-        }
-      ]
-    },
-
-    "system-definitions": {
-      "patterns": [
-        {
-          "name": "meta.system.tdl",
-          "begin": "\\[System:\\s*(UDF|Formula|Variable)\\s*\\]",
-          "end": "(?=\\[)",
-          "patterns": [
-            { "include": "#variables" },
-            { "include": "#keywords" },
-            { "include": "#strings" }
-          ]
-        }
-      ]
-    },
-    "menu-definitions": {
-      "patterns": [
-        {
-          "name": "meta.menu.tdl",
-          "begin": "\\[Menu:\\s*([A-Za-z0-9\\s]+)\\]",
-          "end": "(?=\\[)",
-          "patterns": [
-            {
-              "name": "keyword.menu-item.tdl",
-              "match": "\\b(Item|Key Item|Add|Title|Blank|Indent)\\b"
-            },
-            {
-              "name": "entity.name.menu.tdl",
-              "match": "\\b(Display|Alter|Menu):\\s*[A-Za-z0-9\\s]+\\b"
-            }
-          ]
-        }
-      ]
     }
-  }
 }
