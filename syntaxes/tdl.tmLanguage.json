@@ -4,30 +4,19 @@
     "scopeName": "source.tdl",
     "fileTypes": [".tdl"],
     "patterns": [
-        {
-            "include": "#comments"
-        },
-        {
-            "include": "#definitions"
-        },
-        {
-            "include": "#keywords"
-        },
-        {
-            "include": "#operators"
-        },
-        {
-            "include": "#variables"
-        },
-        {
-            "include": "#strings"
-        },
-        {
-            "include": "#numbers"
-        },
-        {
-            "include": "#functions"
-        }
+        { "include": "#comments" },
+        { "include": "#directives" },
+        { "include": "#definitions" },
+        { "include": "#http-integration" },
+        { "include": "#control-flow" },
+        { "include": "#keywords" },
+        { "include": "#operators" },
+        { "include": "#variables" },
+        { "include": "#strings" },
+        { "include": "#numbers" },
+        { "include": "#functions" },
+        { "include": "#system-definitions" },
+        { "include": "#menu-definitions" }
     ],
     "repository": {
         "comments": {
@@ -43,6 +32,38 @@
                 }
             ]
         },
+        "directives": {
+            "patterns": [
+                {
+                    "name": "meta.directive.tdl",
+                    "match": "^\\s*#(include|insert|replace)\\b"
+                }
+            ]
+        },
+        "http-integration": {
+            "patterns": [
+                {
+                    "name": "meta.http.tdl",
+                    "match": "\\b(Export Header|Data Source|RemoteRequest|JSON Object|Client Only)\\b"
+                },
+                {
+                    "name": "string.unquoted.url.tdl",
+                    "match": "(http|https):\\/\\/[^\\s]+"
+                }
+            ]
+        },
+        "control-flow": {
+            "patterns": [
+                {
+                    "name": "keyword.control.tdl",
+                    "match": "\\b(If|DoIf|Then|Else|EndIf|While|EndWhile|For|EndFor|Break|Continue|Return|Walk|EndWalk|Call|Set|Increment|Query Box|Msg Box|START PROGRESS|END PROGRESS|SHOW PROGRESS|Open File|Write File Line|Close File|Truncate File)\\b"
+                },
+                {
+                    "name": "meta.line-number.tdl",
+                    "match": "^\\s*\\d+:"
+                }
+            ]
+        },
         "definitions": {
             "patterns": [
                 {
@@ -52,26 +73,26 @@
                 {
                     "name": "meta.section.tdl",
                     "match": "^\\s*\\[#[A-Za-z0-9\\s:]+\\]"
+                },
+                {
+                    "name": "meta.object-storage.tdl",
+                    "match": "\\bStorage\\s*:\\s*[A-Za-z0-9_]+\\s*:\\s*(String|Number|Logical|Date)\\b"
                 }
             ]
         },
         "keywords": {
             "patterns": [
                 {
-                    "name": "keyword.control.tdl",
-                    "match": "\\b(If|Else|EndIf|While|EndWhile|For|EndFor|Break|Continue|Return|Walk|EndWalk)\\b"
-                },
-                {
                     "name": "keyword.attribute.tdl",
-                    "match": "\\b(Title|Use|Set as|Storage|Width|Info|Space Left|Local|Add|Option|Include|Source Collection|Format|Fetch|Default|Mandatory|Unique|Key|System|User|Private|Public|Static|Dynamic|Volatile|Constant|ReadOnly|WriteOnly|ReadWrite|Align|Style)\\b"
-                },
-                {
-                    "name": "keyword.modifier.tdl",
-                    "match": "\\b(Repeat|Delete|Replace|Add|Insert|Remove|Modify|Update|Create|Drop|Alter|Rename)\\b"
+                    "match": "\\b(Title|Use|Set as|Storage|Width|Info|Show|Invisible|Validate|Set Always|Space Left|Local|Add|Option|Include|Source Collection|Format|Fetch|Default|Mandatory|Unique|Key|System|User|Private|Public|Static|Dynamic|Volatile|Constant|ReadOnly|WriteOnly|ReadWrite|Align|Style|Repeat|Delete|Border|Inactive|Sub Form|Filter|Export Header|Data Source|RemoteRequest|JSON Object|Client Only|Object|Collection|Form|Report|Part|Line|Field|Menu|Variable|Parameter)\\b"
                 },
                 {
                     "name": "keyword.type.tdl",
-                    "match": "\\b(Integer|String|Number|Boolean|Date|Time|DateTime|Amount|Quantity|Rate|Percentage)\\b"
+                    "match": "\\b(Integer|String|Number|Boolean|Date|Time|DateTime|Amount|Quantity|Rate|Percentage|Voucher|Report|Form|Field|Collection|Part|Line|Logical)\\b"
+                },
+                {
+                    "name": "keyword.voucher.tdl",
+                    "match": "\\b(Invoice|DeliveryNote|Payment|Receipt|Journal|Contra|CreditNote|DebitNote|Purchase|Sales)\\b"
                 }
             ]
         },
@@ -83,7 +104,7 @@
                 },
                 {
                     "name": "keyword.operator.comparison.tdl",
-                    "match": "\\b(==|!=|<=|>=|<|>|<>)\\b"
+                    "match": "\\b(==|!=|<=|>=|<|>|<>|=)\\b"
                 },
                 {
                     "name": "keyword.operator.arithmetic.tdl",
@@ -92,6 +113,10 @@
                 {
                     "name": "keyword.operator.assignment.tdl",
                     "match": ":="
+                },
+                {
+                    "name": "keyword.operator.concatenation.tdl",
+                    "match": "\\+"
                 }
             ]
         },
@@ -99,15 +124,27 @@
             "patterns": [
                 {
                     "name": "variable.language.system.tdl",
-                    "match": "@@[A-Za-z0-9_:.]+"
+                    "match": "@@[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
                 },
                 {
                     "name": "variable.parameter.tdl",
-                    "match": "##[A-Za-z0-9_:.]+"
+                    "match": "##[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
                 },
                 {
-                    "name": "variable.other.tdl",
-                    "match": "\\$[A-Za-z0-9_:.]+"
+                    "name": "variable.local.tdl",
+                    "match": "\\$\\$[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
+                },
+                {
+                    "name": "variable.field.tdl",
+                    "match": "\\$[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
+                },
+                {
+                    "name": "variable.system.tdl",
+                    "match": "@[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)*"
+                },
+                {
+                    "name": "variable.declaration.tdl",
+                    "match": "\\bVariable\\s*:\\s*[A-Za-z0-9_]+\\s*:\\s*(String|Number|Logical|Date)\\b"
                 }
             ]
         },
@@ -134,6 +171,10 @@
                             "match": "\\\\."
                         }
                     ]
+                },
+                {
+                    "name": "string.unquoted.tdl",
+                    "match": "\\b(Yes|No|True|False)\\b"
                 }
             ]
         },
@@ -157,7 +198,7 @@
                 },
                 {
                     "name": "support.function.string.tdl",
-                    "match": "\\b(Length|SubString|Upper|Lower|Trim|LTrim|RTrim|Replace|Concat|Format|Parse|ToNumber|ToString|ToDate)\\b"
+                    "match": "\\b(Length|SubString|Upper|Lower|Trim|LTrim|RTrim|Replace|Concat|Format|Parse|ToNumber|ToString|ToDate|LocaleString|GetFileFullPath)\\b"
                 },
                 {
                     "name": "support.function.date.tdl",
@@ -166,6 +207,43 @@
                 {
                     "name": "support.function.math.tdl",
                     "match": "\\b(Abs|Ceil|Floor|Round|Log|Exp|Power|Sqrt|Sin|Cos|Tan|Random)\\b"
+                },
+                {
+                    "name": "support.function.tdl-specific.tdl",
+                    "match": "\\b(IsEmpty|IsValid|IsFieldEdited|IsExploded|IsMultiGodownOn|IsTrackingOn|IsSysNameEqual|IsEnd|IsDelNote|LastResult|String)\\b"
+                }
+            ]
+        },
+        "system-definitions": {
+            "patterns": [
+                {
+                    "name": "meta.system.tdl",
+                    "begin": "\\[System:\\s*(UDF|Formula|Variable)\\s*\\]",
+                    "end": "(?=\\[)",
+                    "patterns": [
+                        { "include": "#variables" },
+                        { "include": "#keywords" },
+                        { "include": "#strings" }
+                    ]
+                }
+            ]
+        },
+        "menu-definitions": {
+            "patterns": [
+                {
+                    "name": "meta.menu.tdl",
+                    "begin": "\\[Menu:\\s*([A-Za-z0-9\\s]+)\\]",
+                    "end": "(?=\\[)",
+                    "patterns": [
+                        {
+                            "name": "keyword.menu-item.tdl",
+                            "match": "\\b(Item|Key Item|Add|Title|Blank|Indent)\\b"
+                        },
+                        {
+                            "name": "entity.name.menu.tdl",
+                            "match": "\\b(Display|Alter|Menu):\\s*[A-Za-z0-9\\s]+\\b"
+                        }
+                    ]
                 }
             ]
         }
