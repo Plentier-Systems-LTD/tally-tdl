@@ -1,0 +1,173 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "TDL",
+    "scopeName": "source.tdl",
+    "fileTypes": [".tdl"],
+    "patterns": [
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#definitions"
+        },
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#operators"
+        },
+        {
+            "include": "#variables"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#numbers"
+        },
+        {
+            "include": "#functions"
+        }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.line.semicolon.tdl",
+                    "match": ";.*$"
+                },
+                {
+                    "name": "comment.block.tdl",
+                    "begin": "/\\*",
+                    "end": "\\*/"
+                }
+            ]
+        },
+        "definitions": {
+            "patterns": [
+                {
+                    "name": "meta.definition.tdl",
+                    "match": "\\[(?:!?#?)([A-Za-z0-9\\s:]+)\\]"
+                },
+                {
+                    "name": "meta.section.tdl",
+                    "match": "^\\s*\\[#[A-Za-z0-9\\s:]+\\]"
+                }
+            ]
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.tdl",
+                    "match": "\\b(If|Else|EndIf|While|EndWhile|For|EndFor|Break|Continue|Return|Walk|EndWalk)\\b"
+                },
+                {
+                    "name": "keyword.attribute.tdl",
+                    "match": "\\b(Title|Use|Set as|Storage|Width|Info|Space Left|Local|Add|Option|Include|Source Collection|Format|Fetch|Default|Mandatory|Unique|Key|System|User|Private|Public|Static|Dynamic|Volatile|Constant|ReadOnly|WriteOnly|ReadWrite|Align|Style)\\b"
+                },
+                {
+                    "name": "keyword.modifier.tdl",
+                    "match": "\\b(Repeat|Delete|Replace|Add|Insert|Remove|Modify|Update|Create|Drop|Alter|Rename)\\b"
+                },
+                {
+                    "name": "keyword.type.tdl",
+                    "match": "\\b(Integer|String|Number|Boolean|Date|Time|DateTime|Amount|Quantity|Rate|Percentage)\\b"
+                }
+            ]
+        },
+        "operators": {
+            "patterns": [
+                {
+                    "name": "keyword.operator.logical.tdl",
+                    "match": "\\b(AND|OR|NOT|XOR)\\b"
+                },
+                {
+                    "name": "keyword.operator.comparison.tdl",
+                    "match": "\\b(==|!=|<=|>=|<|>|<>)\\b"
+                },
+                {
+                    "name": "keyword.operator.arithmetic.tdl",
+                    "match": "\\b(\\+|-|\\*|/|%|\\^)\\b"
+                },
+                {
+                    "name": "keyword.operator.assignment.tdl",
+                    "match": ":="
+                }
+            ]
+        },
+        "variables": {
+            "patterns": [
+                {
+                    "name": "variable.language.system.tdl",
+                    "match": "@@[A-Za-z0-9_:.]+"
+                },
+                {
+                    "name": "variable.parameter.tdl",
+                    "match": "##[A-Za-z0-9_:.]+"
+                },
+                {
+                    "name": "variable.other.tdl",
+                    "match": "\\$[A-Za-z0-9_:.]+"
+                }
+            ]
+        },
+        "strings": {
+            "patterns": [
+                {
+                    "name": "string.quoted.double.tdl",
+                    "begin": "\"",
+                    "end": "\"",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.tdl",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.single.tdl",
+                    "begin": "'",
+                    "end": "'",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.tdl",
+                            "match": "\\\\."
+                        }
+                    ]
+                }
+            ]
+        },
+        "numbers": {
+            "patterns": [
+                {
+                    "name": "constant.numeric.integer.tdl",
+                    "match": "\\b\\d+\\b"
+                },
+                {
+                    "name": "constant.numeric.float.tdl",
+                    "match": "\\b\\d+\\.\\d+\\b"
+                }
+            ]
+        },
+        "functions": {
+            "patterns": [
+                {
+                    "name": "support.function.aggregate.tdl",
+                    "match": "\\b(Compute|Aggregate|Total|Count|Average|Sum|Max|Min|First|Last|Distinct)\\b"
+                },
+                {
+                    "name": "support.function.string.tdl",
+                    "match": "\\b(Length|SubString|Upper|Lower|Trim|LTrim|RTrim|Replace|Concat|Format|Parse|ToNumber|ToString|ToDate)\\b"
+                },
+                {
+                    "name": "support.function.date.tdl",
+                    "match": "\\b(CurrentDate|CurrentTime|CurrentDateTime|DateAdd|DateDiff|Day|Month|Year|Hour|Minute|Second)\\b"
+                },
+                {
+                    "name": "support.function.math.tdl",
+                    "match": "\\b(Abs|Ceil|Floor|Round|Log|Exp|Power|Sqrt|Sin|Cos|Tan|Random)\\b"
+                }
+            ]
+        }
+    }
+}

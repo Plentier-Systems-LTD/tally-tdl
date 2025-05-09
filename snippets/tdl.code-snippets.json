@@ -1,0 +1,64 @@
+{
+    "TDL Report": {
+      "prefix": "tdl-report",
+      "body": [
+        "[Report: ${1:MyReport}]",
+        "\tForm: ${2:MyForm}",
+        "\tTitle: \"${3:Report Title}\""
+      ],
+      "description": "TDL Report definition"
+    },
+  
+    "TDL Form": {
+      "prefix": "tdl-form",
+      "body": [
+        "[Form: ${1:MyForm}]",
+        "\tPart: ${2:MyPart}",
+        "\tHeight: ${3:100}% Screen",
+        "\tWidth: ${4:100}% Page"
+      ],
+      "description": "TDL Form definition"
+    },
+  
+    "TDL Part": {
+      "prefix": "tdl-part",
+      "body": [
+        "[Part: ${1:MyPart}]",
+        "\tLine: ${2:MyLine}"
+      ],
+      "description": "TDL Part definition"
+    },
+  
+    "TDL Line": {
+      "prefix": "tdl-line",
+      "body": [
+        "[Line: ${1:MyLine}]",
+        "\tField: ${2:MyField}",
+        "\tRepeat: ${3:RepeatLine} : ${4:MyCollection}"
+      ],
+      "description": "TDL Line definition"
+    },
+  
+    "TDL Field": {
+      "prefix": "tdl-field",
+      "body": [
+        "[Field: ${1:MyField}]",
+        "\tUse: ${2:Name Field}",
+        "\tSet as: \\$${3:MyFieldValue}",
+        "\tStorage: ${4:MyStorageVar}"
+      ],
+      "description": "TDL Field definition"
+    },
+  
+    "TDL Collection": {
+      "prefix": "tdl-collection",
+      "body": [
+        "[Collection: ${1:MyCollection}]",
+        "\tType: ${2:Voucher}",
+        "\tChild Of: \\$\\$${3:VchType}",
+        "\tFetch: ${4:*.*}"
+      ],
+      "description": "TDL Collection definition"
+    }
+  }
+  

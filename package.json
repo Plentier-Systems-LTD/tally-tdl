@@ -1,0 +1,32 @@
+{
+  "name": "tally-tdl",
+  "displayName": "tally tdl",
+  "description": "A Visual Studio Code extension that provides tools for working with Tally Definition Language",
+  "main": "./extension.js",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.99.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "tdl",
+      "aliases": ["TDL", "tdl"],
+      "extensions": [".tpj",".txt"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "tdl",
+      "scopeName": "source.tdl",
+      "path": "./syntaxes/tdl.tmLanguage.json"
+    }],
+    "snippets": [
+    {
+      "language": "tdl",
+      "path": "./snippets/tdl.code-snippets.json"
+    }
+  ]
+  }
+}
