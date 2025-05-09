@@ -9,6 +9,7 @@
         { "include": "#definitions" },
         { "include": "#http-integration" },
         { "include": "#control-flow" },
+        { "include": "#storage-declarations" },
         { "include": "#keywords" },
         { "include": "#operators" },
         { "include": "#variables" },
@@ -56,11 +57,31 @@
             "patterns": [
                 {
                     "name": "keyword.control.tdl",
-                    "match": "\\b(If|DoIf|Then|Else|EndIf|While|EndWhile|For|EndFor|Break|Continue|Return|Walk|EndWalk|Call|Set|Increment|Query Box|Msg Box|START PROGRESS|END PROGRESS|SHOW PROGRESS|Open File|Write File Line|Close File|Truncate File)\\b"
+                    "match": "\\b(If|Then|Else|End If|Do If|While|End While|For|EndFor|Break|Continue|Return|Walk|End Walk|Call|Set|Increment|Query Box|Msg Box|START PROGRESS|END PROGRESS|SHOW PROGRESS|Open File|Write File Line|Close File|Truncate File)\\b"
                 },
                 {
                     "name": "meta.line-number.tdl",
                     "match": "^\\s*\\d+:"
+                }
+            ]
+        },
+        "storage-declarations": {
+            "patterns": [
+                {
+                    "name": "meta.storage.declaration.tdl",
+                    "match": "\\bStorage\\s*:\\s*([A-Za-z0-9_]+)\\s*:\\s*(String|Number|Logical|Date|Boolean|Time|DateTime|Amount|Quantity|Rate|Percentage)\\b",
+                    "captures": {
+                        "1": { "name": "variable.other.storage-field.tdl" },
+                        "2": { "name": "keyword.type.tdl" }
+                    }
+                },
+                {
+                    "name": "meta.storage.modifier.tdl",
+                    "match": "\\bStorage\\s*:\\s*([A-Za-z0-9_]+)\\s*:\\s*(Update|Set|Clear|Reset)\\b",
+                    "captures": {
+                        "1": { "name": "variable.other.storage-field.tdl" },
+                        "2": { "name": "keyword.control.storage-action.tdl" }
+                    }
                 }
             ]
         },
@@ -73,10 +94,6 @@
                 {
                     "name": "meta.section.tdl",
                     "match": "^\\s*\\[#[A-Za-z0-9\\s:]+\\]"
-                },
-                {
-                    "name": "meta.object-storage.tdl",
-                    "match": "\\bStorage\\s*:\\s*[A-Za-z0-9_]+\\s*:\\s*(String|Number|Logical|Date)\\b"
                 }
             ]
         },
